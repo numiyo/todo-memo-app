@@ -34,7 +34,7 @@ const { toasts } = useToast()
   position: fixed;
   top: 24px;
   right: 24px;
-  z-index: 9999;
+  z-index: var(--z-toast);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -55,9 +55,9 @@ const { toasts } = useToast()
   max-width: 360px;
 }
 
-.toast-success { background: #10b981; }
-.toast-error   { background: #ef4444; }
-.toast-info    { background: #3b82f6; }
+.toast-success { background: var(--color-success); }
+.toast-error   { background: var(--color-error); }
+.toast-info    { background: var(--color-info); }
 
 .toast-enter-active {
   transition: all 0.3s ease-out;

@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  visible: { type: Boolean, required: true },
+  visible: { type: Boolean, default: false },
   title: { type: String, default: '确认操作' },
   message: { type: String, default: '确定要执行此操作吗？' },
   confirmText: { type: String, default: '确定' },
@@ -42,12 +42,12 @@ const emit = defineEmits(['update:visible', 'confirm', 'cancel'])
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-confirm);
   backdrop-filter: blur(2px);
 }
 
 .dialog-box {
-  background: white;
+  background: var(--color-surface);
   padding: 28px 32px;
   border-radius: 20px;
   width: 400px;
@@ -58,13 +58,13 @@ const emit = defineEmits(['update:visible', 'confirm', 'cancel'])
 .dialog-box h3 {
   margin: 0 0 8px 0;
   font-size: 18px;
-  color: #0f172a;
+  color: var(--color-heading);
 }
 
 .dialog-box p {
   margin: 0 0 24px 0;
   font-size: 14px;
-  color: #64748b;
+  color: var(--color-text-secondary);
   line-height: 1.5;
 }
 
@@ -77,7 +77,7 @@ const emit = defineEmits(['update:visible', 'confirm', 'cancel'])
 .dialog-actions button {
   padding: 8px 24px;
   border: none;
-  border-radius: 30px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -85,22 +85,22 @@ const emit = defineEmits(['update:visible', 'confirm', 'cancel'])
 }
 
 .cancel-btn {
-  background: #f1f5f9;
-  color: #334155;
+  background: var(--color-bg-button);
+  color: var(--color-text-secondary);
 }
 .cancel-btn:hover {
-  background: #e2e8f0;
+  background: var(--color-border);
 }
 
 .confirm-btn {
-  background: #0f172a;
+  background: var(--color-heading);
   color: white;
 }
 .confirm-btn:hover {
   background: #1e293b;
 }
 .confirm-btn.danger {
-  background: #ef4444;
+  background: var(--color-error);
 }
 .confirm-btn.danger:hover {
   background: #dc2626;

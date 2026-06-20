@@ -37,6 +37,7 @@ const handleKeydown = (e) => {
         v-model="newMemo.title"
         placeholder="笔记标题（必填）"
         class="title-input"
+        autofocus
       />
       <input
         v-model="newMemo.tags"
@@ -52,6 +53,7 @@ const handleKeydown = (e) => {
     <button @click="submit">
       <i class="fa-solid fa-plus"></i> 添加笔记
     </button>
+    <span class="shortcut-hint">Ctrl + Enter 快速提交</span>
   </div>
 </template>
 <style scoped>
@@ -107,5 +109,12 @@ const handleKeydown = (e) => {
 }
 .memo-form button:hover {
   background: #1e293b;
+}
+
+.shortcut-hint {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: 12px;
+  color: var(--color-muted);
 }
 </style>

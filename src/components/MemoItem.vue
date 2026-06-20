@@ -6,22 +6,32 @@ const props = defineProps({
   memo: { type: Object, required: true }
 })
 const emit = defineEmits(['delete-memo', 'update-memo'])
-const showModal = ref(false)
+// 编辑弹窗
+const showEditModal = ref(false)
+// 只读详情弹窗
+const showDetailModal = ref(false)
 const showConfirm = ref(false)
+
 const handleDelete = () => {
   emit('delete-memo', props.memo.id)
   showConfirm.value = false
 }
+// 点击卡片打开详情，排除编辑/删除按钮区域
+const openDetail = (e) => {
+  const target = e.target
+  if (target.closest('.actions')) return
+  showDetailModal.value = true
+}
 </script>
 <template>
-  <div class="memo-card">
+  <div class="memo-card" @click="openDetail">
     <div class="card-header">
       <h3>{{ memo.title }}</h3>
       <div class="actions">
-        <button class="edit-btn" @click="showModal = true" title="编辑">
+        <button class="edit-btn" @click.stop="showEditModal = true" title="编辑笔记">
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
-        <button class="delete-btn" @click="showConfirm = true" title="删除">
+        <button class="delete-btn" @click.stop="showConfirm = true" title="删除笔记">
           <i class="fa-regular fa-trash-can"></i>
         </button>
       </div>
@@ -33,11 +43,21 @@ const handleDelete = () => {
     <div class="footer">
       <span class="time">{{ memo.time }}</span>
     </div>
+
+    <!-- 编辑弹窗（可修改） -->
     <MemoEditModal
-      v-model:visible="showModal"
+      v-model:visible="showEditModal"
       :memo="memo"
+      mode="edit"
       @update-memo="emit('update-memo', $event)"
     />
+    <!-- 详情弹窗（只读预览长内容） -->
+    <MemoEditModal
+      v-model:visible="showDetailModal"
+      :memo="memo"
+      mode="view"
+    />
+    <!-- 删除确认弹窗 -->
     <ConfirmDialog
       v-model:visible="showConfirm"
       title="删除笔记"
@@ -59,6 +79,7 @@ const handleDelete = () => {
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 .memo-card:hover {
   box-shadow: var(--shadow-card-hover);

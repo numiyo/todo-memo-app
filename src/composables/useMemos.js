@@ -79,10 +79,18 @@ export function useMemos() {
     memos.value = memos.value.filter(m => m.id !== id)
   }
 
-  const updateMemo = (updated) => {
-    const idx = memos.value.findIndex(m => m.id === updated.id)
-    if (idx !== -1) {
-      memos.value[idx] = { ...memos.value[idx], ...updated }
+  const updateMemo = (payload) => {
+    const now = new Date().toLocaleString()
+    const idx = memos.value.findIndex(m => m.id === payload.id)
+    if (idx > -1) {
+      memos.value[idx] = {
+        ...memos.value[idx],
+        title: payload.title,
+        content: payload.content || '',
+        tags: payload.tags || [],
+        updateTime: now
+      }
+      // 持久化由全局 watch 自动处理，无需手动调用
     }
   }
 
